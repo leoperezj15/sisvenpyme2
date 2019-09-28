@@ -1,0 +1,42 @@
+<table border='0'> 
+				<tr> 
+					<td style='font-weight:bold; border:1px solid #eee;'>CODIGO</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>NRO. DOCUMENTO</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>CLIENTE</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>		
+					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL DESCUENTO</td
+					<td style='font-weight:bold; border:1px solid #eee;'>ALMACEN</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>SUCURSAL</td>			
+					<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+				</tr>
+				<table border='0'> 
+					<tr> 
+						<td style='border:1px solid #eee;'>10</td> 
+						<td style='border:1px solid #eee;'>45354455</td>
+						<td style='border:1px solid #eee;'>REINA VELARDE SOLIZ</td>
+						<td style='border:1px solid #eee;'>admin</td>
+						<td style='border:1px solid #eee;'></td><td> style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee;'>3,223.44</td>
+						<td style='border:1px solid #eee;'>326.96</td>
+						<td style='border:1px solid #eee;'>S100</td>
+						<td style='border:1px solid #eee;'>LOS POZOS</td>
+						<td style='border:1px solid #eee;'>2019-09-05 10:03:06</td>
+
+					</tr>
+				<table border='0'> 
+					<tr> 
+						<td style='border:1px solid #eee;'>9</td> 
+						<td style='border:1px solid #eee;'>45354455</td>
+						<td style='border:1px solid #eee;'>REINA VELARDE SOLIZ</td>
+						<td style='border:1px solid #eee;'>admin</td>
+						<td style='border:1px solid #eee;'></td><td> style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee;'>1,752.12</td>
+						<td style='border:1px solid #eee;'>163.48</td>
+						<td style='border:1px solid #eee;'>S100</td>
+						<td style='border:1px solid #eee;'>LOS POZOS</td>
+						<td style='border:1px solid #eee;'>2019-09-05 10:00:25</td>
+
+					</tr>

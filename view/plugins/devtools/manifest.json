@@ -1,0 +1,10 @@
+{
+	"name": "Alert when editing",
+	"version": "1.0",
+	"description": "Shows an alert every time you make an edit to a file in the sources tab",
+	"devtools_page": "devtools.html",
+	"permissions": [
+		"experimental"
+	],
+	"manifest_version": 2
+}

@@ -1,0 +1,28 @@
+<table border='0'> 
+				<tr> 
+					<td style='font-weight:bold; border:1px solid #eee;'>CODIGO</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>NRO. DOCUMENTO</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>CLIENTE</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL BS</td>		
+					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL DESCUENTO BS</td
+					<td style='font-weight:bold; border:1px solid #eee;'>ALMACEN</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>SUCURSAL</td>			
+					<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+				</tr>
+				<table border='0'> 
+					<tr> 
+						<td style='border:1px solid #eee;'>14</td> 
+						<td style='border:1px solid #eee;'>78151515</td>
+						<td style='border:1px solid #eee;'>DENIS CHIPILIN CLAROS PARDO</td>
+						<td style='border:1px solid #eee;'>admin</td>
+						<td style='border:1px solid #eee;'>6<br>5<br>2<br>1<br></td><td style='border:1px solid #eee;'>DESTORNILLADOR ESTRELLA GKS 67<br>DESTORNILLADOR T20 GKS 67<br>ACEITE DE 2 TIEMPOS GKS 67<br>GABINETE METALICO GWS 26-230<br></td>
+						<td style='border:1px solid #eee;'>835.21</td>
+						<td style='border:1px solid #eee;'>23.30</td>
+						<td style='border:1px solid #eee;'>S100</td>
+						<td style='border:1px solid #eee;'>LOS POZOS</td>
+						<td style='border:1px solid #eee;'>2019-09-06 01:12:07</td>
+
+					</tr>

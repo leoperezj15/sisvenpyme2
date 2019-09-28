@@ -1,0 +1,56 @@
+<table border='0'> 
+				<tr> 
+					<td style='font-weight:bold; border:1px solid #eee;'>CODIGO</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>NRO. DOCUMENTO</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>CLIENTE</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL BS</td>		
+					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL DESCUENTO BS</td
+					<td style='font-weight:bold; border:1px solid #eee;'>ALMACEN</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>SUCURSAL</td>			
+					<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+				</tr>
+				<table border='0'> 
+					<tr> 
+						<td style='border:1px solid #eee;'>8</td> 
+						<td style='border:1px solid #eee;'>46616516</td>
+						<td style='border:1px solid #eee;'>HUMBERTO JUSTINIANO GIL</td>
+						<td style='border:1px solid #eee;'>admin</td>
+						<td style='border:1px solid #eee;'>1<br></td><td style='border:1px solid #eee;'>DESTORNILLADOR ESTRELLA GKS 67<br></td>
+						<td style='border:1px solid #eee;'>15.60</td>
+						<td style='border:1px solid #eee;'>0.00</td>
+						<td style='border:1px solid #eee;'>S101</td>
+						<td style='border:1px solid #eee;'>LOS POZOS</td>
+						<td style='border:1px solid #eee;'>2019-08-16 11:24:14</td>
+
+					</tr>
+				<table border='0'> 
+					<tr> 
+						<td style='border:1px solid #eee;'>7</td> 
+						<td style='border:1px solid #eee;'>45354455</td>
+						<td style='border:1px solid #eee;'>REINA VELARDE SOLIZ</td>
+						<td style='border:1px solid #eee;'>admin</td>
+						<td style='border:1px solid #eee;'>5<br>5<br></td><td style='border:1px solid #eee;'>DESTORNILLADOR ESTRELLA GKS 67<br>DESTORNILLADOR T20 GKS 67<br></td>
+						<td style='border:1px solid #eee;'>462.37</td>
+						<td style='border:1px solid #eee;'>24.34</td>
+						<td style='border:1px solid #eee;'>S100</td>
+						<td style='border:1px solid #eee;'>LOS POZOS</td>
+						<td style='border:1px solid #eee;'>2019-08-16 07:55:59</td>
+
+					</tr>
+				<table border='0'> 
+					<tr> 
+						<td style='border:1px solid #eee;'>6</td> 
+						<td style='border:1px solid #eee;'>8974782</td>
+						<td style='border:1px solid #eee;'>TATIANA POLANCO PLAZA</td>
+						<td style='border:1px solid #eee;'>admin</td>
+						<td style='border:1px solid #eee;'>1<br></td><td style='border:1px solid #eee;'>DESTORNILLADOR ESTRELLA GKS 67<br></td>
+						<td style='border:1px solid #eee;'>15.60</td>
+						<td style='border:1px solid #eee;'>0.00</td>
+						<td style='border:1px solid #eee;'>S100</td>
+						<td style='border:1px solid #eee;'>LOS POZOS</td>
+						<td style='border:1px solid #eee;'>2019-08-15 03:05:18</td>
+
+					</tr>

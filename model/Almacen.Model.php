@@ -1,0 +1,209 @@
+<?php
+                
+/**
+ * @author		Leonardo Perez Justiniano
+ * @copyright 	2018
+ * @version     1.0
+ */
+
+require_once "data/db.inc";
+require_once "data/Almacen.inc";
+require_once "data/Sucursal.inc";
+                     
+class Almacen_Model extends DataBase
+{
+    function __construct()
+    {
+        $this->Open();
+    }
+    
+    function GetAlmacenList()
+    {
+        $sql = "SELECT t1.idAlmacen AS t1_idAlmacen, 
+        t1.hash AS t1_hash, 
+        t1.nombre AS t1_nombre, 
+        t1.sigla AS t1_sigla, 
+        t1.estado AS t1_estado, 
+        t2.idSucursal AS t2_idSucursal,
+        t2.hash AS t2_hash, 
+        t2.Nombre AS t2_Nombre 
+        FROM almacen t1
+        INNER JOIN sucursal t2 on t1.idSucursal=t2.idSucursal
+        ORDER BY t1.idAlmacen ASC";
+        $res = $this->Execute($sql);
+        
+        $list = array();
+        if ($this->ContainsData($res)){
+            $data = $this->DataListStructure($res);
+            foreach($data as $item)
+            {
+                $osAlmacen = new Structure_Almacen;
+                $osSucursal = new Structure_Sucursal;
+
+                $osAlmacen->idAlmacen->SetValue($item["t1_idAlmacen"]);
+                $osAlmacen->hash->SetValue($item["t1_hash"]);
+                $osAlmacen->nombre->SetValue($item["t1_nombre"]);
+                $osAlmacen->sigla->SetValue($item["t1_sigla"]);
+                $osAlmacen->estado->SetValue($item["t1_estado"]);
+
+                $osSucursal->idSucursal->SetValue($item["t2_idSucursal"]);
+                $osSucursal->hash->SetValue($item["t2_hash"]);
+                $osSucursal->Nombre->SetValue($item["t2_Nombre"]);
+                
+                $osAlmacen->Sucursal = $osSucursal;
+
+                $listAlmacen[] = $osAlmacen;                
+            }            
+        }
+        
+        return $listAlmacen;//devolver una lista[]
+    }
+    function ListarAlmacen($_page,$_query,$_per_page)
+    {
+        $tables="almacen";
+        $campos="*";
+        $sWhere=" Nombre LIKE '%".$query."%'";
+        $sWhere.=" order by Nombre";
+
+        include 'control/almacen/pagination.php';
+
+        $adjacents  = 4;
+
+        $offset = ($page - 1) * $per_page;
+
+        $sql1 = "SELECT count(*) AS numrows FROM $tables where $sWhere ";
+        $res = $this->Execute($sql1);
+
+        if($this->ConstainsData($res))
+        {
+            if($row = $this->FetchArray($res))
+            {
+                $numrows = $row['numrows'];
+            }
+        }
+        $total_pages = ceil($numrows/$per_page);
+
+        $sql2 = "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page";
+        $res2 = $this->Execute($sql2);
+
+        if($this->ConstainsData($res2))
+        {
+            if($row2 = $this->FetchArray($res2))
+            {
+                $camposAlmacen = array(
+                    'idAlmacen' => $row2['idAlmacen'],
+                    'Nombre' => $row2['Nombre'],
+                    'Sigla' => $row2['Sigla'],
+                    'idSucrusal' => $row2['idSucursal'],
+            );
+            }
+        }
+        return $camposAlmacen;
+
+    }
+    function listarAlmacenPorSucursal($_idSucursal)
+    {
+        $sql = "select * from almacen where idSucursal=$_idSucursal";
+        $res = $this->Execute($sql);
+        $list = array();
+        if ($this->ContainsData($res)){
+            $data = $this->DataListStructure($res);
+            foreach($data as $item)
+            {
+                $osAlmacen = new Structure_Almacen;
+
+                $osAlmacen->idAlmacen->SetValue($item["idAlmacen"]);
+                $osAlmacen->nombre->SetValue($item["nombre"]);
+                $osAlmacen->sigla->SetValue($item["sigla"]);
+                $osAlmacen->idSucursal->SetValue($item["idSucursal"]);
+
+                $listAlmacen[] = $osAlmacen;                
+            }            
+        }
+        
+        return $listAlmacen;//devolver una lista[]
+
+    }
+    function Verificar($_nombre,$_sigla)
+    {
+        $sql = "SELECT * FROM almacen WHERE Nombre = '$_nombre' AND Sigla='$_sigla'";
+
+        $res = $this->Execute($sql);
+
+        if ($this->ContainsData($res))
+        {
+            return true;  
+        }
+        else
+        {
+            return false;
+        }   
+
+    }
+    /** 
+     * @abstract Función para guardar Almacenes
+     * @param Structure_Almacen osAlmacen
+     * @return bool
+     */
+    function SaveAlmacen($_osAlmacen)
+    {
+        $sql = "Insert into almacen values (
+                " . $_osAlmacen->idAlmacen->GetValue() . ",
+                '" . $_osAlmacen->hash->GetValue() . "',
+                '" . $_osAlmacen->Nombre->GetValue() . "',
+                '" . $_osAlmacen->Sigla->GetValue() . "',
+                '" . $_osAlmacen->estado->GetValue() . "',
+                '" . $_osAlmacen->idSucursal->GetValue() . "')";
+
+        $res = $this->Execute($sql);
+
+        $id   = $this->GetLastIdAutoGenerated();
+        $hash = sha1($id);
+        $sql2 = "Update almacen set hash = '". $hash ."' where idAlmacen = " . $id;
+        $res2 = $this->Execute($sql2);
+        
+        $r = ($res and $res2) ? true : false;
+        return $r;
+    }
+    /** 
+     * @abstract Funci'on para actualizar Almacen
+     * @param Structure_Almacen osAlmacen
+     * @return bool
+     */
+    function UpdateAlmacen($_osAlmacen)
+    {
+        $sql = "UPDATE almacen SET 
+                    Nombre = '" . $_osAlmacen->Nombre->GetValue() . "',
+                    Sigla = '" . $_osAlmacen->Sigla->GetValue() . "',
+                    idSucursal = '" . $_osAlmacen->idSucursal->GetValue() . "',
+                    estado = '" . $_osAlmacen->estado->GetValue() . "'
+                WHERE hash = '" . $_osAlmacen->hash->GetValue() . "'     ";
+        $res = $this->Execute($sql);
+        
+        return $res;
+    }
+    /** 
+     * @abstract Función para Desactivar Almacen
+     * @param Structure_Almacen osAlmacen
+     * @return bool
+     */
+    function DeleteAlmacen($_hash)
+    {
+        $sql = "Update almacen set estado = 'Inactivo' where hash = '" . $_hash . "'";
+        $res = $this->Execute($sql);
+        
+        return $res;
+    }
+    /** 
+     * @abstract Función para Activar Almacen
+     * @param Structure_Almacen osAlmacen
+     * @return bool
+     */
+    function ActiveAlmacen($_hash)
+    {
+        $sql = "Update almacen set estado = 'Activo' where hash = '" . $_hash . "'";
+        $res = $this->Execute($sql);
+        
+        return $res;
+    }
+}

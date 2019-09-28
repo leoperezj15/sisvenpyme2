@@ -1,0 +1,14 @@
+<table border='0'> 
+				<tr> 
+					<td style='font-weight:bold; border:1px solid #eee;'>CODIGO</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>NRO. DOCUMENTO</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>CLIENTE</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL BS</td>		
+					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL DESCUENTO BS</td
+					<td style='font-weight:bold; border:1px solid #eee;'>ALMACEN</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>SUCURSAL</td>			
+					<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+				</tr><tr><td colspan='11' style='border:1px solid #eee;'>No hay Datos</td></tr>
