@@ -48,7 +48,40 @@ class Modelo_Model extends DataBase
         
 
     }
-    
+
+    /**
+     * 
+     */
+    function GetModeloForMarca($_idMarca)
+    {
+        $sql = "SELECT * FROM `modelo` WHERE idMarca=".$_idMarca;
+
+        $res = $this->Execute($sql);
+
+        $listaModelo = array();
+
+        if($this->ContainsData($res))
+        {
+            $data = $this->DataListStructure($res);
+
+            foreach($data as $item)
+            {
+                $osModelo = new Structure_Modelo;
+
+               $osModelo->idModelo->SetValue($item["idModelo"]);
+               $osModelo->hash->SetValue($item["hash"]);
+               $osModelo->model->SetValue($item["model"]);
+               $osModelo->ficha_tecnica->SetValue($item["ficha_tecnica"]);
+               $osModelo->estado->SetValue($item["estado"]);
+               $osModelo->idMarca->SetValue($item["idMarca"]);
+
+               $listaModelo[] = $osModelo;
+
+            }
+
+        }
+        return $listaModelo;
+    }
     
     
 }

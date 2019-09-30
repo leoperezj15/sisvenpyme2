@@ -14,6 +14,8 @@ require_once "control/rol.control.php";
 require_once "control/dashboard.control.php";
 require_once "control/marca.control.php";
 require_once "control/modelo.control.php";
+require_once "control/categoria.control.php";
+require_once "control/unidad_medida.control.php";
 
 
 $plantilla = new PlantillaControl();

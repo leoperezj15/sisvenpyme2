@@ -218,7 +218,8 @@ if (isset($_SESSION["ACL"]))
   
 
   // echo '<div class="fakeLoader"></div>';
-  echo '<div class="wrapper">';
+  echo '<div class="wrapper">
+          <div id="sin_scroll"';
     /*=========================================================
             CABECERA
     =========================================================*/
@@ -282,7 +283,7 @@ if (isset($_SESSION["ACL"]))
 
     include "modulos/footer.php";
 
-    echo '</div>';
+    echo '</div></div>';
     
 }
 else

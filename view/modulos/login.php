@@ -22,7 +22,7 @@
 
       <div class="form-group has-feedback">
 
-        <input type="text" id="user" name="user" class="form-control" placeholder="Usuario">
+        <input type="text" id="user" name="user" class="form-control" placeholder="Usuario" required>
 
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 
@@ -30,7 +30,7 @@
 
       <div class="form-group has-feedback">
 
-        <input type="password" id="pass" name="pass" class="form-control" placeholder="Contraceña">
+        <input type="password" id="pass" name="pass" class="form-control" placeholder="Contraceña" required>
 
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 

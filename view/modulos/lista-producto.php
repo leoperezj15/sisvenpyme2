@@ -47,7 +47,7 @@ if (isset($_SESSION["ObjetosValidos"]))
 
     
     <section class="content">
-
+      <div id="alert"></div>
       <div class="box box-danger">
 
         <div class="box-header with-border">
@@ -112,6 +112,7 @@ if (isset($_SESSION["ObjetosValidos"]))
     </section>
 
   </div>
+
 
 <!-- Para incluir Listado de Productos -->
 <script src="view/js/producto.js"></script>

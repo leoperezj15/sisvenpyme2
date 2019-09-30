@@ -3,4 +3,4 @@ Options All -Indexes
 RewriteEngine On
 
 RewriteRule ^([-a-zA-Z0-9]+)$ index.php?mnu=$1
-RewriteRule ^([-a-zA-Z0-9]+)$ factura.php?mandante=$1
+RewriteRule ^([-a-zA-Z0-9]+)$ proyecto/sales/pdf/factura.php?mandante=$1

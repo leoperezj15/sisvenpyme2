@@ -10,7 +10,8 @@ require_once "field.inc";
 
  class Structure_Categoria
  {
- 	public $idCategoria;
+	public $idCategoria;
+	public $hash;
  	public $nombre;
  	public $descripcion;
  	public $estado;
@@ -18,7 +19,8 @@ require_once "field.inc";
  	function __construct()
  	{
 
- 		$this->idCategoria = new Field("int", true);
+		$this->idCategoria = new Field("int", true);
+		$this->hash = new Field("varchar");
  		$this->nombre = new Field("varchar");
  		$this->descripcion = new Field("varchar");
  		$this->estado = new Field("enum");

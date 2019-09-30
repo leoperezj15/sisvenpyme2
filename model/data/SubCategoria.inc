@@ -13,6 +13,7 @@ require_once "Categoria.inc";
 class Structure_SubCategoria
 {
 	public $idsubCategoria;
+	public $hash;
 	public $nombre;
 	public $descripcion;
 	public $estado;
@@ -23,6 +24,7 @@ class Structure_SubCategoria
 	function __construct()
 	{
 		$this->idsubCategoria = new Field("int", true);
+		$this->hash = new Field("varchar");
  		$this->nombre = new Field("varchar");
  		$this->descripcion = new Field("varchar");
  		$this->estado = new Field("enum");

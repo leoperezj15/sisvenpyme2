@@ -1,14 +1,13 @@
 <!--=====================================
  MODAL AGREGAR ALMACEN
 ======================================-->
-
 <div id="modalAgregarProducto" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
     <div class="modal-content">
 
-      <form role="form" method="POST">
+      <form id="FormSaveProducto"  method="POST" role="form">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -34,14 +33,14 @@
 
             <div class="row">
               
-              <div class="col-xs-4">
+              <div class="col-xs-6">
                 
                 <!-- ENTRADA PARA EL NOMBRE -->
                 <div class="form-group">
                 
                   <label for="p_a_nombre">Nombre</label>
 
-                  <input type="text" autofocus class="form-control UpperCase" id="p_a_nombre" name="p_a_nombre" placeholder="Nombre de Producto" required>
+                  <input type="text" autofocus class="form-control UpperCase input-sm" id="p_a_nombre" name="p_a_nombre" placeholder="Nombre de Producto" required>
 
                   <!-- onkeyup="this.value = this.value.toUpperCase();" -->
 
@@ -49,7 +48,7 @@
 
               </div>
 
-              <div class="col-xs-4">
+              <div class="col-xs-6">
                 
                 <!-- ENTRADA PARA APELLIDO PATERNO -->
 
@@ -57,15 +56,17 @@
                   
                   <label for="p_a_descripcion">Descripción</label>
 
-                  <input type="text" class="form-control UpperCase" id="p_a_descripcion" name="p_a_descripcion" placeholder="Descripción de Producto" required>
+                  <input type="text" class="form-control UpperCase input-sm" id="p_a_descripcion" name="p_a_descripcion" placeholder="Descripción de Producto" required>
 
                 </div>
 
               </div>
 
-              <div class="col-xs-4">
-                
-                <!-- ENTRADA PARA APELLIDO MATERNO -->
+            </div>
+
+            <div class="row">
+
+              <div class="col-xs-6">
 
                 <div class="form-group">
                   
@@ -77,7 +78,9 @@
 
                     $idMarca = "";
 
-                    $selectMarca = "<select id='marca'  class='form-control input-sm' onchange='ListarModeloPorMarca(this)'>";
+                    $selectMarca = "<select name='p_a_marca' id='p_a_marca'  class='form-control input-sm' onchange='ListarModeloPorMarca(this)'>
+                                      <option value='0'>Selecione la Marca</option>
+                    ";
                     foreach ($marca as $item) {
                         if ($idMarca == "") 
                         {
@@ -95,53 +98,51 @@
                 </div>
 
               </div>
+              <div class="col-xs-6">
+                
+                <div class="form-group">
+
+                  <div id="cajon-modelo">
+
+                    <label for="">Módelo</label>
+
+                    <select name="p_a_modelo" id="p_a_modelo" class="form-control input-sm">
+                      <option value="0">Selecione la Marca</option>
+                    </select>
+                  </div>
+                  
+                </div>
+
+              </div>
 
             </div>
 
             <div class="row">
 
-              <!-- ENTRADA PARA FECHA DE NACIMIENTO -->
+              <!-- ENTRADA PARA CI -->
 
-              <div class="col-xs-4">
+              <div class="col-xs-5">
                 
                 <div class="form-group">
                   
-                  <label for="nuevoFechaNac">Módelo</label>
+                  <label for="p_a_categoria">Categoría</label>
 
                   <?php
 
-                    $modelo = ControladorModelo::ctrMostrarModelo();
+                    $categoria = ControladorCategoria::ctrMostrarCategoria();
 
-                    $idModelo = "";
+                    $selectCategoria = "<select name='p_a_categoria' id='p_a_categoria'  class='form-control input-sm' onchange='ListarSubCategoriaPorCategoria(this)'>
+                                      <option value='0'>Selecione la Categoria</option>
+                    ";
+                    foreach ($categoria as $item3) {
 
-                    $selectModelo = "<select id='cajon-modelo' name='modelo' class='form-control input-sm'>";
-                    foreach ($modelo as $item) 
-                    {
-                      if ($idModelo == "") 
-                      {
-                        $idModelo = $item->idModelo->GetValue();
-                      }
-
-                      $selectModelo .= "<option value='".$item->idModelo->GetValue()."'>".$item->model->GetValue()."</option>";
+                        $selectCategoria .= "<option value='".$item3->idCategoria->GetValue()."'>".$item3->nombre->GetValue()."</option>";
                     }
-                    $selectModelo .= "</select>";
+                    $selectCategoria .= "</select>";
 
-                    echo $selectModelo;
+                    echo $selectCategoria;
 
                   ?>
-                </div>
-
-              </div>
-
-              <!-- ENTRADA PARA CI -->
-
-              <div class="col-xs-3">
-                
-                <div class="form-group">
-                  
-                  <label for="nuevoCi">Cédula</label>
-
-                  <input type="text"  data-inputmask='"mask": "99999999"' data-mask class="form-control" id="nuevoCi" name="nuevoCi" placeholder="de Identidad" required>
 
                 </div>
 
@@ -149,18 +150,23 @@
 
               <!-- ENTRADA PARA DIRECCION -->
 
-              <div class="col-xs-5">
+              <div class="col-xs-7">
                 
                 <div class="form-group">
-                  
-                  <label for="nuevoDireccion">Dirección</label>
 
-                  <input type="text" class="form-control UpperCase" id="nuevoDireccion" name="nuevoDireccion" placeholder="Dirección" required>
+                  <div id="cajon-subcategoria">
+                  <label for='p_a_sub_categoria'>Sub Categoría</label>
+            
+                    <select name='p_a_sub_categoria' id='p_a_sub_categoria' class='form-control input-sm'>
+                      <option value='0'>Selecione la Categoria</option>
+                    </select>
+
+                  </div>
 
                 </div>
 
               </div>
-
+                          
             </div>
 
             <div class="row">
@@ -171,9 +177,9 @@
                 
                 <div class="form-group">
                   
-                  <label for="nuevoZona">Zona</label>
+                  <label for="p_a_pais">Origen</label>
 
-                  <input type="text" class="form-control UpperCase" id="nuevoZona" name="nuevoZona" placeholder="Zona" required>
+                  <input type="text" class="form-control UpperCase input-sm" id="p_a_pais" name="p_a_pais" placeholder="Zona" required>
 
                 </div>
 
@@ -185,9 +191,9 @@
                 
                 <div class="form-group">
                   
-                  <label for="nuevoTelFijo">Teléfono Fijo</label>
+                  <label for="p_a_codigo">Código</label>
 
-                  <input type="text" data-inputmask='"mask": "(9) 999-999"' data-mask class="form-control" id="nuevoTelFijo" name="nuevoTelFijo" placeholder="Teléfono Fijo">
+                  <input type="text" class="form-control input-sm" id="p_a_codigo" name="p_a_codigo" placeholder="codigo" required minlength="7" maxlength="7" min="1000000" max="1009999">
 
                 </div>
 
@@ -199,9 +205,9 @@
                 
                 <div class="form-group">
                   
-                  <label for="nuevoTelCelular">Teléfono Celular</label>
+                  <label for="p_a_precio_compra">Precio</label>
 
-                  <input type="text" data-inputmask='"mask": "999-99-999"' data-mask class="form-control" id="nuevoTelCelular" name="nuevoTelCelular" placeholder="Teléfono Celular" required>
+                  <input type="text" class="form-control input-sm" id="p_a_precio_compra" name="p_a_precio_compra" placeholder="Precio de Compra" required>
 
                 </div>
 
@@ -211,23 +217,46 @@
 
             <div class="row">
 
-              <!-- ENTRADA GENERO -->
+              <div class="col-xs-5">
+                
+                <div class="form-group">
+                  
+                  <label for="p_a_incremento">Utilidad Bruta</label>
+                  
+                  <div class="input-group">
+
+                    <span class="input-group-addon">%</span>
+
+                    <input type="number" name="p_a_incremento" id="p_a_incremento" min="10.00" max="99.99" class="form-control input-sm">
+
+                  </div>
+                  
+                </div>
+
+              </div>
 
               <div class="col-xs-5">
                 
                 <div class="form-group">
                   
-                  <label for="nuevoGenero">Género</label>
+                  <label for="p_um">Unidad Medida Base</label>
 
-                  <select name="nuevoGenero" id="nuevoGenero" class="form-control">
-                    
-                    <option value="Masculino">Masculino</option>
+                  <?php
 
-                    <option value="Femenino">Femenino</option>
+                    $categoria = ControladorUnidadMedida::ctrMostrarUnidadMedida();
 
-                    <option value="Otro">Otro</option>
+                    $selectUnidadMedida = "<select name='p_a_unidad_medida' id='p_a_unidad_medida'  class='form-control input-sm' >
+                                      <option value='0'>Selecione la UM</option>
+                    ";
+                    foreach ($categoria as $item4) {
 
-                  </select>
+                        $selectUnidadMedida .= "<option value='".$item4->idunidadMedida->GetValue()."'>".$item4->nombre->GetValue()."</option>";
+                    }
+                    $selectUnidadMedida .= "</select>";
+
+                    echo $selectUnidadMedida;
+
+                  ?>
 
                 </div>
 
@@ -251,17 +280,12 @@
 
           <button type="button" class="btn bg-teal btn-app pull-left" data-dismiss="modal"><i class="fa fa-reply"></i> Salir</button>
 
-          <button type="submit" class="btn bg-orange btn-app"><i class="fa fa-save"></i> Guardar
-              </button>
+          <button type="submit" id="btnSaveProducto" class="btn bg-green btn-app">
+            <i class="fa fa-save"></i> 
+            Guardar
+          </button>
 
         </div>
-
-        <?php
-
-          $crearNatural = new ControladorNatural();
-          $crearNatural -> ctrCrearClienteNatural();
-
-        ?>
 
       </form>
 

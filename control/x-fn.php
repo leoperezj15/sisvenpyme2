@@ -11,6 +11,8 @@ require "../model/Empleado.Model.php";
 require "../model/Usuario.Model.php";
 require "../model/Venta.Model.php";
 require "../model/Cliente.Model.php";
+require "../model/Modelo.Model.php";
+require "../model/SubCategoria.Model.php";
 require "../model/data/transaction.inc";
 
 
@@ -50,7 +52,6 @@ if ( isset($_POST["fn"]) )
 
 			        $content = $selectAlmacen;
 
-			        echo $content;
 			    }
 			}
 
@@ -63,28 +64,86 @@ if ( isset($_POST["fn"]) )
 			{
 			    if(!empty($_POST["idMarca"]))
 			    {
-
 			        $oModelo_model = new Modelo_Model;
 
-			        $listaModelo = $oModelo_model->listarModeloPorMarca($idMarca);
+			        $listaModelo = $oModelo_model->GetModeloForMarca($idMarca);
 
 			        $selectModelo = "
 			        <label for='Modelo'>Módelo</label>
 			        
-			            <select name='p_a_modelo' id='p_a_modelo' class='form-control input-sm'>";
+						<select name='p_a_modelo' id='p_a_modelo' class='form-control input-sm'>
+							<option value='0'>Selecione el modelo</option>";
 			        foreach ($listaModelo as $item2) 
 			        {
-			            $selectModelo .= "<option value='". $item2->idModelo->GetValue() ."'>". $item2->model->GetValue() ."</option>";
+			            $selectModelo .= "<option value='".$item2->idModelo->GetValue()."'>". $item2->model->GetValue() ."</option>";
 			        }
 			        $selectModelo .= "</select>";
 
 			        $content = $selectModelo;
 
-			        echo $content;
-			    }
-			}
+				}
+				else
+				{
+					$selectModelo = "
+						<label for='Modelo'>Módelo</label>
+						
+						<select name='p_a_modelo' id='p_a_modelo' class='form-control input-sm'>
+							<option value='0'>Selecione la Marca</option>
+						</select>";
 
+						$content = $selectModelo;
+				}
+			}
 			break;
+
+		/**
+		 * 
+		 */
+		case 'SubCategoriaPorCategoria':
+
+			$idCategoria = intval($_POST["idCategoria"]);
+
+			if(isset($_POST["idCategoria"]))
+			{
+				if(!empty($_POST["idCategoria"]))
+				{
+					$oSubCategoria = new SubCategoria_Model;
+
+					$listaSubCategoria = $oSubCategoria->GetListSubCategoriaByCategoria($idCategoria);
+
+					// echo '<pre>';
+					// print_r($listaSubCategoria);
+					// echo '</pre>';
+					// return;
+
+					$selectSubCategoria = "
+					<label for='p_a_sub_categoria'>Sub Categoria</label>
+					
+						<select name='p_a_sub_categoria' id='p_a_sub_categoria' class='form-control input-sm'>
+						
+							<option value='0'>Selecione una sub-categoria</option>";
+					foreach ($listaSubCategoria as $item2) 
+					{
+						$selectSubCategoria .= "<option value='".$item2->idsubCategoria->GetValue()."'>". $item2->nombre->GetValue() ."</option>";
+					}
+					$selectSubCategoria .= "</select>";
+
+					$content = $selectSubCategoria;
+
+				}
+				else
+				{
+					$selectSubCategoria = "
+						<label for='p_a_sub_categoria'>Sub Categoria</label>
+						
+						<select name='p_a_sub_categoria' id='p_a_sub_categoria' class='form-control input-sm'>
+							<option value='0'>Selecione la Marca</option>
+						</select>";
+
+						$content = $selectSubCategoria;
+				}
+			}
+		break;
 		case 'SavePedido':
 			$oUtil  = new Util;
 
@@ -735,7 +794,23 @@ if ( isset($_POST["fn"]) )
 		        return;
 			}
 
-			break;
+		break;
+		case 'SaveProducto':
+			echo '<pre>';
+			print_r($_POST);
+			echo '</pre>';
+			echo "
+					        <script>
+					            swal({
+					                position: 'top',
+					                type: 'error',
+					                title: 'llego',
+					                showConfirmButton: false,
+					                timer: 1500
+					            });
+					        </script>";
+					        return;
+		break;
 		default:
 			# code...
 			break;

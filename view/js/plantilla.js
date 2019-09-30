@@ -72,7 +72,12 @@ PARA ACTIVAR LAS ANIMACIONES ENTRE PAGINAS
 $(document).on('click','#search', function(e){
  pace.start(); 
 });
-
+/*=============================================
+CONTROLAR EL SCROLL
+=============================================*/
+$('#sin-scroll').slimscroll({
+	height: 'auto'
+});
 /*=============================================
 CONTROLADOR DE SESSION	
 =============================================*/
@@ -113,4 +118,6 @@ function contadorSesion() {
 function salir() {
     window.location.href = base_url + "auth/logout"; //esta función te saca
 }
+
+
 

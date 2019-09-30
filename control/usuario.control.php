@@ -19,119 +19,164 @@ class ControladorUsuarios
 
         if (isset($_POST["user"]) && isset($_POST["pass"])) 
         {
-            if (preg_match('/^[a-zA-Z0-9]+$/', $_POST["user"])&&
-            preg_match('/^(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%.ñÑ])[0-9A-Za-zñÑ!@#$%.]{8,16}$/', $_POST["pass"])
-            ) 
+            if (preg_match('/^[a-zA-Z0-9]+$/', $_POST["user"]))
             {
-                $user = base64_encode($_POST["user"]);
-                $pass = base64_encode($_POST["pass"]);
-                
-                $oUsuario_Model    = new Usuario_Model;
-                
-                $oUsuario   = $oUsuario_Model->VerificarLogin($user, $pass);
-                
-                $content = "error|Datos de acceso incorrectos";
-                if ($oUsuario != null)
+                if (preg_match('/^(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%.ñÑ])[0-9A-Za-zñÑ!@#$%.]{8,16}$/', $_POST["pass"])) 
                 {
+                    $user = base64_encode($_POST["user"]);
+                    $pass = base64_encode($_POST["pass"]);
                     
-                    $idRol  = $oUsuario->idRol->getValue();
-                    $rol    = $oUsuario->Rol->nombre->GetValue();
-                    //incrementar usuario a la variable de session
-                    $idUsuario = $oUsuario->idUsuario->GetValue();
-                    $usuario = $oUsuario->username->GetValue();
-                    $email = $oUsuario->email->GetValue();
-                    $idEmpleado = $oUsuario->idEmpleado->GetValue();
-                    //
+                    $oUsuario_Model    = new Usuario_Model;
                     
-                    $oRolModulo_model  = new RolModulo_Model;
-                    $oObjeto_Model     = new Objeto_Model;
+                    $oUsuario   = $oUsuario_Model->VerificarLogin($user, $pass);
                     
-                    $lista = $oRolModulo_model->GetListByRol($idRol);
-                    
-                    $acl = array();
-                    $cad = "";
-
-                    foreach($lista as $item)
+                    $content = "error|Datos de acceso incorrectos";
+                    if ($oUsuario != null)
                     {
-                        $idModulo = $item->idModulo->GetValue();
                         
-                        $listaObjetos = $oObjeto_Model->GetListByModulo($idModulo);
-                        $cad2 = "";
+                        $idRol  = $oUsuario->idRol->getValue();
+                        $rol    = $oUsuario->Rol->nombre->GetValue();
+                        //incrementar usuario a la variable de session
+                        $idUsuario = $oUsuario->idUsuario->GetValue();
+                        $usuario = $oUsuario->username->GetValue();
+                        $email = $oUsuario->email->GetValue();
+                        $idEmpleado = $oUsuario->idEmpleado->GetValue();
+                        //
                         
-                        $iObjetos = array();
-                        foreach($listaObjetos as $item2){
-                            $cad2 .= $item2->nombre->GetValue() . ",";
+                        $oRolModulo_model  = new RolModulo_Model;
+                        $oObjeto_Model     = new Objeto_Model;
+                        
+                        $lista = $oRolModulo_model->GetListByRol($idRol);
+                        
+                        $acl = array();
+                        $cad = "";
+
+                        foreach($lista as $item)
+                        {
+                            $idModulo = $item->idModulo->GetValue();
                             
-                            $iObjetos[] = array("idObjeto" => $item2->idObjeto->GetValue(),
-                                                "nombre" => $item2->nombre->GetValue(),
-                                                "nombreControl" =>$item2->nombreControl->GetValue(),
-                                                );
-
-                            $_SESSION["ObjetosValidos"][] = $item2->nombreControl->GetValue();
-                        }
-                        
-                        $iModulos[] = array("idModulo" => $idModulo,
-                                            "nombre" => $item->Modulo->nombre->GetValue(),
-                                            "icono" => $item->Modulo->icono->GetValue(),
-                                            "listaObjetos" => $iObjetos);
-                                            
-                        $cad .= $item->Modulo->nombre->GetValue() . "(". $cad2 .")";
-                    }
-
-                    $usuarioactivo = array(
-                        "idUsuario" => $idUsuario,
-                        "usuario" => $usuario,
-                        "email" => $email,
-                       "idEmpleado" => $idEmpleado);
-
-                    $acl = array("idRol" => $idRol,
-                                 "nombre" => $rol,
-                                 "usuario_activo" => $usuarioactivo,
-                                 "listaModulos" => $iModulos);
-
-                    $_SESSION["ACL"] = $acl;
-
-                    
-                    $content = "ok|Datos Correctos";
-                    echo '<script>
-
-                                window.location = "inicio";
-
-                            </script>';
-                    
-                }
-                else
-                {
-                    echo '
-                            <script>
-
-                                swal({
-
-                                    type: "error",
-                                    title: "¡Usuario y/o contraseña incorrectos! Intente de nuevo",
-                                    showConfirmButton: true,
-                                    confirmButtonText: "Cerrar"
-
-                                }).then(function(result){
-
-                                    if(result.value){
-                                    
-                                        window.location = "inicio";
-
-                                    }
-
-                                });
+                            $listaObjetos = $oObjeto_Model->GetListByModulo($idModulo);
+                            $cad2 = "";
                             
-
-                            </script>';
-                }
+                            $iObjetos = array();
+                            foreach($listaObjetos as $item2){
+                                $cad2 .= $item2->nombre->GetValue() . ",";
                                 
+                                $iObjetos[] = array("idObjeto" => $item2->idObjeto->GetValue(),
+                                                    "nombre" => $item2->nombre->GetValue(),
+                                                    "nombreControl" =>$item2->nombreControl->GetValue(),
+                                                    );
+
+                                $_SESSION["ObjetosValidos"][] = $item2->nombreControl->GetValue();
+                            }
+                            
+                            $iModulos[] = array("idModulo" => $idModulo,
+                                                "nombre" => $item->Modulo->nombre->GetValue(),
+                                                "icono" => $item->Modulo->icono->GetValue(),
+                                                "listaObjetos" => $iObjetos);
+                                                
+                            $cad .= $item->Modulo->nombre->GetValue() . "(". $cad2 .")";
+                        }
+
+                        $usuarioactivo = array(
+                            "idUsuario" => $idUsuario,
+                            "usuario" => $usuario,
+                            "email" => $email,
+                        "idEmpleado" => $idEmpleado);
+
+                        $acl = array("idRol" => $idRol,
+                                    "nombre" => $rol,
+                                    "usuario_activo" => $usuarioactivo,
+                                    "listaModulos" => $iModulos);
+
+                        $_SESSION["ACL"] = $acl;
+
+                        
+                        $content = "ok|Datos Correctos";
+                        echo '<script>
+
+                                    window.location = "inicio";
+
+                                </script>';
+                        
+                    }
+                    else
+                    {
+                        echo '
+                                <script>
+
+                                    swal({
+
+                                        type: "error",
+                                        title: "¡Usuario y/o contraseña incorrectos! Intente de nuevo",
+                                        showConfirmButton: true,
+                                        confirmButtonText: "Cerrar"
+
+                                    }).then(function(result){
+
+                                        if(result.value){
+                                        
+                                            window.location = "inicio";
+
+                                        }
+
+                                    });
+                                
+
+                                </script>';
+                    }
+                }
+                else{
+                    echo '
+                        <script>
+
+                            swal({
+
+                                type: "error",
+                                title: "¡La contraseña no cumple con los requisitos mínimos de 8 a 16 caracteres! Intente de nuevo",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar"
+
+                            }).then(function(result){
+
+                                if(result.value){
+                                
+                                    window.location = "inicio";
+
+                                }
+
+                            });
+                        
+
+                        </script>';
+                }
+                                 
             }
             else
             {
                
-                echo '<br>
-                            <div class="alert alert-danger">El usuario contiene caracteres especiales</div>';
+                echo '
+                    <script>
+
+                        swal({
+
+                            type: "error",
+                            title: "¡Usuario inválido, no debe contener caracteres especiales! Intente de nuevo",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+
+                        }).then(function(result){
+
+                            if(result.value){
+                            
+                                window.location = "inicio";
+
+                            }
+
+                        });
+                    
+
+                    </script>';
             }
         }
         else
