@@ -179,7 +179,7 @@
                   
                   <label for="p_a_pais">Origen</label>
 
-                  <input type="text" class="form-control UpperCase input-sm" id="p_a_pais" name="p_a_pais" placeholder="Zona" required>
+                  <input type="text" class="form-control UpperCase input-sm" id="p_a_pais" name="p_a_pais" placeholder="Procedencia" required>
 
                 </div>
 
@@ -193,7 +193,7 @@
                   
                   <label for="p_a_codigo">Código</label>
 
-                  <input type="text" class="form-control input-sm" id="p_a_codigo" name="p_a_codigo" placeholder="codigo" required minlength="7" maxlength="7" min="1000000" max="1009999">
+                  <input type="text" data-inputmask='"mask": "9999999"' data-mask class="form-control input-sm" id="p_a_codigo" name="p_a_codigo" placeholder="codigo" required minlength="7" maxlength="7" min="1000000" max="1009999">
 
                 </div>
 
@@ -205,9 +205,9 @@
                 
                 <div class="form-group">
                   
-                  <label for="p_a_precio_compra">Precio</label>
+                  <label for="p_a_precio">Precio</label>
 
-                  <input type="text" class="form-control input-sm" id="p_a_precio_compra" name="p_a_precio_compra" placeholder="Precio de Compra" required>
+                  <input type="text" class="form-control input-sm" id="p_a_precio" name="p_a_precio" placeholder="Precio de Compra" required>
 
                 </div>
 
@@ -217,7 +217,7 @@
 
             <div class="row">
 
-              <div class="col-xs-5">
+              <div class="col-xs-4">
                 
                 <div class="form-group">
                   
@@ -235,7 +235,7 @@
 
               </div>
 
-              <div class="col-xs-5">
+              <div class="col-xs-4">
                 
                 <div class="form-group">
                   
@@ -257,6 +257,18 @@
                     echo $selectUnidadMedida;
 
                   ?>
+
+                </div>
+
+              </div>
+
+              <div class="col-xs-4">
+                
+                <div class="form-group">
+                  
+                  <label for="p_a_peso">Peso</label>
+                
+                  <input type="text" name="p_a_peso" id="p_a_peso" minlength="2" class="form-control input-sm UpperCase">
 
                 </div>
 

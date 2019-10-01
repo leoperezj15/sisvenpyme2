@@ -13,11 +13,8 @@ require "../model/Venta.Model.php";
 require "../model/Cliente.Model.php";
 require "../model/Modelo.Model.php";
 require "../model/SubCategoria.Model.php";
+require "../model/Producto.Model.php";
 require "../model/data/transaction.inc";
-
-
-
-
 
 $content = "";
 
@@ -27,6 +24,11 @@ if ( isset($_POST["fn"]) )
 
 	switch ($fn) 
 	{
+		/**
+		 * @abstract función para listar Almacen Por Sucursal
+		 * @param idSucursal
+		 * @return list Sucursal
+		 */
 		case 'AlmacenPorSucursal':
 			//lista de modelo por marca
 			$idSucursal = intval($_POST["idSucursal"]); // hash Categoria
@@ -55,7 +57,12 @@ if ( isset($_POST["fn"]) )
 			    }
 			}
 
-			break;
+		break;
+		/** 
+ 		 * @abstract función para listar Modelo por Marca
+		 * @param idMarca
+		 * @return list Modelo
+		*/
 		case 'ModeloPorMarca':
 			//lista de modelo por marca
 			$idMarca = intval($_POST["idMarca"]); // hash Categoria
@@ -94,7 +101,7 @@ if ( isset($_POST["fn"]) )
 						$content = $selectModelo;
 				}
 			}
-			break;
+		break;
 
 		/**
 		 * 
@@ -338,7 +345,7 @@ if ( isset($_POST["fn"]) )
 				$ci = $_POST["ci"];
 
 				$username = $_POST["username"];
-				$password = "Miempresa.2019";//contraseña genrica para laprimera vez el usuario debera de cambiar la contraseña
+				$password = "Miempresa2019@";//contraseña génerica para laprimera vez el usuario debera de cambiar la contraseña
 				$alias = $_POST["alias"];
 				$email = $_POST["email"];
 				$rol = $_POST["rol"];
@@ -795,21 +802,202 @@ if ( isset($_POST["fn"]) )
 			}
 
 		break;
+		/** 
+		 * 
+		*/
 		case 'SaveProducto':
-			echo '<pre>';
-			print_r($_POST);
-			echo '</pre>';
-			echo "
-					        <script>
-					            swal({
-					                position: 'top',
-					                type: 'error',
-					                title: 'llego',
-					                showConfirmButton: false,
-					                timer: 1500
-					            });
-					        </script>";
-					        return;
+			
+			
+			if(isset($_POST['nombre']))
+			{
+				$nombre = $_POST['nombre'];
+				$descripcion = $_POST['descripcion'];
+				$marca = $_POST['marca'];
+				$modelo = $_POST['modelo'];
+				$categoria = $_POST['categoria'];
+				$subcategoria = $_POST['subcategoria'];
+				$codigo = $_POST['codigo'];
+				$precio = $_POST['precio'];
+				$pais = $_POST['pais'];
+				$incremento = $_POST['incremento'];
+				$um = $_POST['um'];
+				$peso = $_POST['peso'];
+
+				if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\/.\- ]+$/', $nombre)&&
+					preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\/.\- ]+$/', $descripcion)&&
+					preg_match('/^[0-9]+$/', $marca)&&
+					preg_match('/^[0-9]+$/', $modelo)&&
+					preg_match('/^[0-9]+$/', $categoria)&&
+					preg_match('/^[0-9]+$/', $subcategoria)&&
+					preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $pais)&&
+					filter_var($codigo, FILTER_VALIDATE_INT, array("options" => array("min_range" => 1001000, "max_range" => 1009999)))&&
+					filter_var($incremento, FILTER_VALIDATE_INT, array("options" => array("min_range" => 10, "max_range" => 60)))&&
+					filter_var($um, FILTER_VALIDATE_INT, array("options" => array("min_range" => 1, "max_range" => 100)))&&
+					preg_match('/^[0-9.]+$/', $precio)&&
+					preg_match('/^[a-zA-Z0-9 ]+$/', $peso)
+				)
+				{
+					// echo '<pre>';
+					// print_r($_POST);
+					// echo '</pre>';
+					// return;
+
+					//Operacion axiliar para sacar el precio de Venta
+					$calculo = ($precio * $incremento) / 100;
+					$pventa = $calculo + $precio;
+
+					//verificamos que precio de venta sea mayor al precio 
+					if ($pventa > $precio) 
+					{
+						$oProducto = new Producto_Model;
+						$osProducto = new Structure_Producto;
+
+						$verificar_nom = $oProducto->VerificarProducto('nombre',$nombre);
+						
+						// return;
+						if (empty($verificar_nom)) 
+						{
+							//echo 'no existe el nombre';
+							$oProducto1 = new Producto_Model;
+							$verificar_cod = $oProducto1->VerificarProducto('codigo',$codigo);
+							// echo '<pre>';
+							// print_r($verificar_cod);
+							// echo '</pre>';
+							if (empty($verificar_cod)) 
+							{
+								$oProducto2 = new Producto_Model;
+								$verificar_mod = $oProducto2->VerificarProducto('idModelo',$modelo);
+								if (empty($verificar_mod)) {
+
+									
+									$osProducto->idProducto->SetValue(0);
+									$osProducto->hash->SetValue("");
+									$osProducto->nombre->SetValue($nombre);
+									$osProducto->descripcion->SetValue($descripcion);
+									$osProducto->estado->SetValue("Activo");
+									$osProducto->peso->SetValue($peso); 
+									$osProducto->madein->SetValue($pais);
+									$osProducto->codigo->SetValue($codigo);
+									$osProducto->pcompra->SetValue($precio);
+									$osProducto->pventa->SetValue($pventa);
+									$osProducto->idModelo->SetValue($modelo);
+									$osProducto->idsubCategoria->SetValue($subcategoria);
+									$osProducto->idunidadMedida->SetValue($um);
+
+									$oProducto = new Producto_Model;
+
+									$res = $oProducto->SaveProducto($osProducto);
+
+									if ($res == true){
+										echo "
+										<script>
+											swal({
+												position: 'top',
+												type: 'success',
+												title: 'El producto se ah guardado correctamente',
+												showConfirmButton: false,
+												timer: 1500
+											});
+										</script>";
+										return;
+									}
+									else{
+										echo "
+										<script>
+											swal({
+												position: 'top',
+												type: 'error',
+												title: 'No se pudo guardar el producto',
+												showConfirmButton: false,
+												timer: 1500
+											});
+										</script>";
+										return;
+									}
+
+								}else{
+									echo "
+									<script>
+										swal({
+											position: 'top',
+											type: 'error',
+											title: 'Ya existe un producto asignado al modelo',
+											showConfirmButton: false,
+											timer: 1500
+										});
+									</script>";
+									return;
+								}
+								
+							}
+							else
+							{
+								echo "
+								<script>
+									swal({
+										position: 'top',
+										type: 'error',
+										title: 'El código ya existe en un producto',
+										showConfirmButton: false,
+										timer: 1500
+									});
+								</script>";
+								return;
+							}
+							
+						}
+						else{
+							echo "
+							<script>
+								swal({
+									position: 'top',
+									type: 'error',
+									title: 'Ya existe un producto con ese nombre',
+									showConfirmButton: false,
+									timer: 1500
+								});
+							</script>";
+							return;
+						}
+
+					}
+					else{
+						echo "
+						<script>
+							swal({
+								position: 'top',
+								type: 'error',
+								title: 'El precio de Venta no puede ser menor al precio de Compra',
+								showConfirmButton: false,
+								timer: 1500
+							});
+						</script>";
+						return;
+					}
+
+					
+
+				}
+				else
+				{
+					echo "
+					<script>
+						swal({
+							position: 'top',
+							type: 'error',
+							title: 'Error, algunos datos tienen caracteres especiales no permitidos',
+							showConfirmButton: false,
+							timer: 1500
+						});
+					</script>";
+					return;
+				}
+
+			}
+			else
+			{
+
+			}
 		break;
 		default:
 			# code...

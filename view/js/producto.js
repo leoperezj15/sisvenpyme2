@@ -160,8 +160,10 @@ $().ready(function(){
         	origen = $("#p_a_origen").val();
         	codigo = $("#p_a_codigo").val();
             precio = $("#p_a_precio").val();
+            pais = $("#p_a_pais").val();
             incremento = $("#p_a_incremento").val();
             um = $("#p_a_unidad_medida").val();
+            peso = $("#p_a_peso").val();
 
         	var formData = {
                 fn : "SaveProducto",
@@ -174,8 +176,10 @@ $().ready(function(){
                 origen: origen,
                 codigo: codigo,
                 precio: precio,
+                pais: pais,
                 incremento: incremento,
-                um: um
+                um: um,
+                peso: peso
             }
 
             $("#alert").show();
@@ -188,12 +192,11 @@ $().ready(function(){
                 url: "control/x-fn.php",
                 data: formData,
                 success: function(msg){
-                    //$('#modalAgregarProducto').modal('hide');
                     console.log("productos", msg);
                     $("#alert").html(msg);
                     setTimeout(function() {
                         $('#alert').fadeOut('slow');
-                    }, 5000);
+                    }, 10000);
                     
 
                 }

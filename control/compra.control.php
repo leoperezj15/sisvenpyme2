@@ -187,10 +187,6 @@ function ProcesarCompra()
     $usuarioActivo = $_SESSION["ACL"]["usuario_activo"];
     $idUsuario = $usuarioActivo["idUsuario"];
 
-
-    
-    
-    
     $fecha_ingreso = date("Y-m-d h:i:s");
 
     if($monto_total!="")
